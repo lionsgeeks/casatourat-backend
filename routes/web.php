@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api as api;
 use App\Http\Controllers\ClerckController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\FormulaireController;
 use App\Http\Controllers\GuidedVisitController;
 use App\Http\Controllers\VideoController;
 
@@ -111,5 +112,12 @@ Route::get('/reviews', [api\CommentController::class, "show"])->middleware(['aut
 
 Route::get('/guided_visits', [GuidedVisitController::class, 'index'])->name('guided.index');
 Route::post('/guided_visits/clearance/{visit}', [GuidedVisitController::class, 'clearance'])->name('guided.clearance');
+
+//* Formulaire
+Route::get('/formulaire', [FormulaireController::class, 'user'])->name('user.survey');
+Route::post('/survey', [FormulaireController::class, 'store'])->name('survey.store');
+Route::get('/forms', [FormulaireController::class, 'index'])->name('form.index')->middleware(['auth', 'verified']);
+Route::get('/form/{formulaire}', [FormulaireController::class, 'show'])->name('form.show')->middleware(['auth', 'verified']);
+Route::delete('/form/{formulaire}', [FormulaireController::class, 'destroy'])->name('form.delete')->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
