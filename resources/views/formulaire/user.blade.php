@@ -143,13 +143,13 @@
             {{-- Question 1 Source  --}}
             <div>
                 <label class="block text-lg font-semibold">
-                    <span x-show="language == 'عربية'">١. كيف سمعت عن ليالي التراث؟</span>
-                    <span x-show="language == 'English'">1. How did you hear about the Heritage Nocturnes?</span>
-                    <span x-show="language == 'Français'">1. Comment avez-vous entendu parler des Nocturnes du
+                    <span x-show="language == 'عربية'">١. كيف سمعت عن أيام التراث؟</span>
+                    <span x-show="language == 'English'">1. How did you hear about the Heritage Days?</span>
+                    <span x-show="language == 'Français'">1. Comment avez-vous entendu parler des Journées du
                         Patrimoine ?</span>
-                    <span x-show="language == 'Español'">1. ¿Cómo se enteró de las Nocturnes du
-                        Patrimoine?</span>
+                    <span x-show="language == 'Español'">1. ¿Cómo se enteró de los Días del Patrimonio?</span>
                 </label>
+
                 <div class="space-y-2">
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="source[]" value="Réseaux sociaux"
@@ -507,8 +507,7 @@
 
             {{-- Submit --}}
             <div class="pt-4">
-                <button type="submit"
-                    class="bg-alpha text-white font-semibold px-6 py-2 rounded w-full transition">
+                <button type="submit" class="bg-alpha text-white font-semibold px-6 py-2 rounded w-full transition">
                     <span x-show="language === 'عربية'">إرسال</span>
                     <span x-show="language === 'English'">Send</span>
                     <span x-show="language === 'Français'">Envoyer</span>
