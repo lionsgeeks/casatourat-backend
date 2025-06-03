@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\FormulairesExport;
 use App\Models\Formulaire;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FormulaireController extends Controller
 {
@@ -97,5 +99,11 @@ class FormulaireController extends Controller
     {
         $formulaire->delete();
         return redirect()->back();
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new FormulairesExport, 'formulaire.xlsx');
     }
 }

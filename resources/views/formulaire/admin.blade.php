@@ -7,6 +7,15 @@
 
     <div class="p-6 mt-6" x-data='{}'>
         <div class="p-2 rounded bg-white">
+            <form action="{{route('form.export')}}" class="flex justify-end px-6 py-2" method="POST">
+                @csrf
+                @method("GET")
+                <button type="submit" class="px-3 py-1 rounded bg-alpha text-white">
+                    Export Excel
+                </button>
+            </form>
+
+
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>

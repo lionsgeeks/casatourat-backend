@@ -114,6 +114,7 @@ Route::get('/guided_visits', [GuidedVisitController::class, 'index'])->name('gui
 Route::post('/guided_visits/clearance/{visit}', [GuidedVisitController::class, 'clearance'])->name('guided.clearance');
 
 //* Formulaire
+Route::get('/form/export', [FormulaireController::class, 'export'])->name('form.export')->middleware(['auth', 'verified']);
 Route::get('/formulaire', [FormulaireController::class, 'user'])->name('user.survey');
 Route::post('/survey', [FormulaireController::class, 'store'])->name('survey.store');
 Route::get('/forms', [FormulaireController::class, 'index'])->name('form.index')->middleware(['auth', 'verified']);
