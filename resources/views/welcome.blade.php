@@ -20,7 +20,7 @@
     class="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground"
     x-data="{
         lang: 'french',
-        formSuccess: {{ session('inscription_success') ? 'true' : 'false' }},
+        formSuccess: {{ session('inscription_cm_event_success') ? 'true' : 'false' }},
         formLoading: false,
     }"
 >
@@ -363,18 +363,18 @@
                                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                     </svg>
-                                    <span x-show="lang === 'english'">Event Registration</span>
+                                    <span x-show="lang === 'english'">CM Event Registration</span>
                                     <span x-show="lang === 'french'">Inscription aux événements</span>
                                     <span x-show="lang === 'arabic'" dir="rtl">التسجيل في الأحداث</span>
                                 </span>
 
                                 <h2 class="mt-4 text-2xl font-bold tracking-tight text-[rgb(var(--foreground))] sm:text-3xl">
-                                    <span x-show="lang === 'english'">Reserve your spot at the next event</span>
+                                    <span x-show="lang === 'english'">Reserve your spot at the next CM Event</span>
                                     <span x-show="lang === 'french'">Réservez votre place au prochain événement</span>
                                     <span x-show="lang === 'arabic'" dir="rtl">احجز مكانك في الحدث القادم</span>
                                 </h2>
                                 <p class="mt-3 text-base font-medium text-[rgb(var(--muted))]">
-                                    <span x-show="lang === 'english'">Pick an event, share your details, and we'll contact you with the schedule and meeting point.</span>
+                                    <span x-show="lang === 'english'">Pick a CM Event, share your details, and we'll contact you with the schedule and meeting point.</span>
                                     <span x-show="lang === 'french'">Choisissez un événement, laissez vos infos, et nous vous envoyons le planning et le point de rendez-vous.</span>
                                     <span x-show="lang === 'arabic'" dir="rtl">اختر الحدث واترك بياناتك وسنرسل لك الجدول ونقطة اللقاء.</span>
                                 </p>
@@ -503,14 +503,13 @@
                                             x-show="!formSuccess"
                                             class="mt-6 grid gap-5"
                                             method="POST"
-                                            action="{{ route('inscription.store') }}"
+                                            action="{{ route('cmevents.participants.public_store') }}"
                                             @submit.prevent="
                                                 formLoading = true;
                                                 $el.submit();
                                             "
                                         >
                                             @csrf
-
                                             {{-- Validation errors --}}
                                             @if ($errors->any())
                                                 <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -578,7 +577,7 @@
 
                                             {{-- Phone --}}
                                             <div class="grid gap-1.5">
-                                                <label for="phone" class="text-sm font-semibold text-[rgb(var(--foreground))]">
+                                                <label for="phone_number" class="text-sm font-semibold text-[rgb(var(--foreground))]">
                                                     <span x-show="lang === 'english'">Phone number</span>
                                                     <span x-show="lang === 'french'">Numéro de téléphone</span>
                                                     <span x-show="lang === 'arabic'" dir="rtl">رقم الهاتف</span>
@@ -591,75 +590,64 @@
                                                         </svg>
                                                     </span>
                                                     <input
-                                                        id="phone"
-                                                        name="phone"
+                                                        id="phone_number"
+                                                        name="phone_number"
                                                         type="tel"
                                                         autocomplete="tel"
                                                         inputmode="tel"
                                                         required
-                                                        value="{{ old('phone') }}"
+                                                        value="{{ old('phone_number') }}"
                                                         placeholder="+212 6xx-xxxxxx"
                                                         class="w-full rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--background))] py-3 pl-10 pr-4 text-sm text-[rgb(var(--foreground))] shadow-sm placeholder:text-[rgb(var(--muted))] transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[rgb(var(--ring))]"
                                                     />
                                                 </div>
                                             </div>
 
-                                            {{-- Event select --}}
+                                            {{-- CM Event select --}}
+                                            @php
+                                                $upcomingCmEvents = collect($cmevents ?? [])->filter(
+                                                    fn($e) => $e->start_date && $e->start_date->isFuture()
+                                                )->values();
+                                            @endphp
                                             <div class="grid gap-1.5">
-                                                <label for="event_id" class="text-sm font-semibold text-[rgb(var(--foreground))]">
-                                                    <span x-show="lang === 'english'">Select an event</span>
+                                                <label for="cm_event_id" class="text-sm font-semibold text-[rgb(var(--foreground))]">
+                                                    <span x-show="lang === 'english'">Select event</span>
                                                     <span x-show="lang === 'french'">Choisir un événement</span>
-                                                    <span x-show="lang === 'arabic'" dir="rtl">اختر حدثاً</span>
+                                                    <span x-show="lang === 'arabic'" dir="rtl">اختر الحدث</span>
                                                     <span class="text-[rgb(var(--primary))]">*</span>
                                                 </label>
                                                 <div class="relative">
                                                     <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-[rgb(var(--muted))]">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="M8 2v4"/><path d="M16 2v4"/>
-                                                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                                                            <path d="M3 10h18"/>
+                                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                                                         </svg>
                                                     </span>
                                                     <select
-                                                        id="event_id"
-                                                        name="event_id"
+                                                        id="cm_event_id"
+                                                        name="cm_event_id"
                                                         required
                                                         class="w-full appearance-none rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--background))] py-3 pl-10 pr-10 text-sm text-[rgb(var(--foreground))] shadow-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[rgb(var(--ring))]"
                                                     >
-                                                        <option value="" selected disabled>
-                                                            — Select an event —
+                                                        <option value="" disabled selected>
+                                                            <span x-show="lang === 'english'">— Choose an event —</span>
                                                         </option>
-                                                        @foreach (($events ?? []) as $event)
-                                                            @php
-                                                                $eventTitle = $event->title;
-                                                                if (is_object($eventTitle)) {
-                                                                    $eventTitle = $eventTitle->french
-                                                                        ?? $eventTitle->english
-                                                                        ?? $eventTitle->arabic
-                                                                        ?? null;
-                                                                }
-                                                                $eventTitle = is_string($eventTitle) && trim($eventTitle) !== ''
-                                                                    ? $eventTitle
-                                                                    : ('Event #' . $event->id);
-                                                                $eventDate = $event->start ? $event->start->format('d M Y') : null;
-                                                            @endphp
-                                                            <option value="{{ $event->id }}" @selected(old('event_id') == $event->id)>
-                                                                {{ $eventTitle }}{{ $eventDate ? ' — ' . $eventDate : '' }}
+                                                        @foreach ($upcomingCmEvents as $cmevent)
+                                                            <option value="{{ $cmevent->id }}" @selected(old('cm_event_id') == $cmevent->id)>
+                                                                {{ $cmevent->name }} — {{ $cmevent->start_date->format('d M Y') }}
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    {{-- Custom chevron --}}
                                                     <span class="pointer-events-none absolute inset-y-0 right-3.5 flex items-center text-[rgb(var(--muted))]">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                             <path d="m6 9 6 6 6-6"/>
                                                         </svg>
                                                     </span>
                                                 </div>
-                                                @if (empty($events) || (is_countable($events) && count($events) === 0))
+                                                @if ($upcomingCmEvents->isEmpty())
                                                     <p class="m-0 text-xs text-[rgb(var(--muted))]">
-                                                        <span x-show="lang === 'english'">No events available right now. Check back soon.</span>
-                                                        <span x-show="lang === 'french'">Aucun événement disponible pour l'instant.</span>
-                                                        <span x-show="lang === 'arabic'" dir="rtl">لا توجد أحداث متاحة حالياً.</span>
+                                                        <span x-show="lang === 'english'">No upcoming CM events right now. Check back soon.</span>
+                                                        <span x-show="lang === 'french'">Aucun événement CM à venir pour l'instant.</span>
+                                                        <span x-show="lang === 'arabic'" dir="rtl">لا توجد أحداث CM قادمة حالياً.</span>
                                                     </p>
                                                 @endif
                                             </div>

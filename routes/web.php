@@ -18,7 +18,6 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\FormulaireController;
 use App\Http\Controllers\GuidedVisitController;
 use App\Http\Controllers\VideoController;
-use App\Http\Controllers\InscriptionController;
 
 Route::get('/', function () {
     $events = \App\Models\Event::query()
@@ -26,9 +25,14 @@ Route::get('/', function () {
         ->limit(25)
         ->get(['id', 'title', 'start', 'end']);
 
-    return view('welcome', compact('events'));
+    $cmevents = \App\Models\CMEvent::query()
+        ->where('is_private', false)
+        ->where('start_date', '>=', now())
+        ->orderBy('start_date')
+        ->get(['id', 'name', 'start_date']);
+
+    return view('welcome', compact('events', 'cmevents'));
 })->name('welcome');
-Route::post('/inscription', [InscriptionController::class, 'store'])->name('inscription.store');
 
 Route::get('/termsofuse', function () {
     return view('terms.terms_and_policy');
@@ -131,10 +135,14 @@ Route::get('/forms', [FormulaireController::class, 'index'])->name('form.index')
 Route::get('/form/{formulaire}', [FormulaireController::class, 'show'])->name('form.show')->middleware(['auth', 'verified']);
 Route::delete('/form/{formulaire}', [FormulaireController::class, 'destroy'])->name('form.delete')->middleware(['auth', 'verified']);
 
+// Public registration from the welcome page — no auth required
+Route::post('/cmevents/participants/register', [CMEventParticipantController::class, 'publicStore'])->name('cmevents.participants.public_store');
+
 Route::resource('cmevents', CMEventController::class)->except(['show'])->middleware(['auth', 'verified']);
 Route::prefix('cmevents/{cmevent}/participants')->name('cmevents.participants.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [CMEventParticipantController::class, 'index'])->name('index');
     Route::delete('/{participant}', [CMEventParticipantController::class, 'destroy'])->name('destroy');
+    Route::post('/', [CMEventParticipantController::class, 'store'])->name('store');
 });
 
 require __DIR__ . '/auth.php';
