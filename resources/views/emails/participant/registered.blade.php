@@ -101,19 +101,17 @@
         }
 
         .brand-mark {
-            width: 34px;
-            height: 34px;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
-            border-radius: 8px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.07);
+
         }
 
         .brand-mark svg {
-            width: 17px;
-            height: 17px;
+            width: 56px;
+            height: 56px;
             fill: none;
             stroke: white;
             stroke-width: 1.8;
@@ -409,7 +407,8 @@
                         <div class="">
                             <!-- Arch / heritage icon -->
                             {{-- set the Logo-Casamemoire-color.svg here --}}
-                            <img class="brand-mark" src="{{ asset('assets/images/Logo-Casamemoire-color.svg') }}" alt="CasaMémoire">
+                            <img class="brand-mark" src="{{ asset('assets/images/Logo-Casamemoire-color.svg') }}"
+                                alt="CasaMémoire">
                         </div>
                         <span class="brand-name">CasaMémoire</span>
                     </div>
@@ -484,14 +483,14 @@
                 <div class="note">
                     <strong>Vous n'êtes pas à l'origine de cette inscription ?</strong><br>
                     Ignorez cet e-mail ou contactez-nous immédiatement à
-                    <a href="mailto:contact@casamemoire.org">contact@casamemoire.org</a>.
+                    <a href="mailto:casamemoire@casamemoire.org">casamemoire@casamemoire.org</a>.
                 </div>
 
             </div>
 
             <!-- FOOTER -->
             <div class="footer">
-                <span class="footer-brand">CasaMémoire ONG</span>
+                <span class="footer-brand">Casamémoire</span>
                 <span class="footer-note">Message automatique — merci de ne pas répondre.</span>
             </div>
 
