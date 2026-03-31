@@ -20,20 +20,7 @@ use App\Http\Controllers\FormulaireController;
 use App\Http\Controllers\GuidedVisitController;
 use App\Http\Controllers\VideoController;
 
-Route::get('/', function () {
-    $events = \App\Models\Event::query()
-        ->orderByDesc('start')
-        ->limit(25)
-        ->get(['id', 'title', 'start', 'end']);
-
-    $cmevents = \App\Models\CMEvent::query()
-        ->where('is_private', false)
-        ->where('start_date', '>=', now())
-        ->orderBy('start_date')
-        ->get(['id', 'name', 'start_date']);
-
-    return view('welcome', compact('events', 'cmevents'));
-})->name('welcome');
+Route::get('/', [CMEventController::class, 'displayEvents'])->name('welcome');
 
 Route::get('/termsofuse', function () {
     return view('terms.terms_and_policy');

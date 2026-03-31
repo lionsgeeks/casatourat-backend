@@ -88,4 +88,21 @@ class CMEventController extends Controller
 
         return redirect()->route('cmevents.index')->with('success', 'Event deleted successfully.');
     }
+    public function displayEvents()
+    {
+        $events = \App\Models\Event::query()
+            ->orderByDesc('start')
+            ->limit(25)
+            ->get(['id', 'title', 'start', 'end']);
+
+        $cmevents = \App\Models\CMEvent::query()
+            ->where('is_private', false)
+            ->where('start_date', '>=', now())
+            ->whereNotNull('capacity')
+            ->where('capacity', '>', 0)
+            ->orderBy('start_date')
+            ->get(['id', 'name', 'start_date', 'capacity']);
+
+        return view('welcome', compact('events', 'cmevents'));
+    }
 }

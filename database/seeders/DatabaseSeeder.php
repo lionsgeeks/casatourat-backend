@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         'description' => 'Description of the CM Event 3',
         'start_date' => Carbon::now()->addDays(1),
         'end_date' => Carbon::now()->addDays(2),
-        'capacity' => 100,
+        'capacity' => 2,
         'location' => 'Casablanca',
         'is_private' => false,
         'created_at' => Carbon::now(),

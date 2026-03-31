@@ -6,6 +6,7 @@ use App\Mail\ParticipantRegistered;
 use App\Models\CMEvent;
 use App\Models\CMEventParticipant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -39,7 +40,34 @@ class CMEventParticipantController
             'phone_number' => ['required', 'string', 'max:30'],
         ]);
 
-        $participant = $cmevent->participants()->create($validated);
+        $participant = DB::transaction(function () use ($cmevent, $validated) {
+            $lockedEvent = CMEvent::query()->lockForUpdate()->find($cmevent->id);
+
+            if (!$lockedEvent) {
+                abort(404);
+            }
+
+            // If capacity is set, enforce it and decrement by 1 on successful registration.
+            if ($lockedEvent->capacity !== null) {
+                if ($lockedEvent->capacity <= 0) {
+                    return null;
+                }
+            }
+
+            $participant = $lockedEvent->participants()->create($validated);
+
+            if ($lockedEvent->capacity !== null) {
+                $lockedEvent->decrement('capacity');
+            }
+
+            return $participant;
+        });
+
+        if (!$participant) {
+            return redirect()
+                ->back()
+                ->withErrors(['cm_event_id' => 'This event is full (capacity reached).']);
+        }
 
         $this->sendQrConfirmationEmail($participant);
 
@@ -61,7 +89,37 @@ class CMEventParticipantController
             'cm_event_id'  => ['required', 'integer', 'exists:cm_events,id'],
         ]);
 
-        $participant = CMEventParticipant::create($validated);
+        $participant = DB::transaction(function () use ($validated) {
+            $lockedEvent = CMEvent::query()
+                ->whereKey($validated['cm_event_id'])
+                ->lockForUpdate()
+                ->first();
+
+            if (!$lockedEvent) {
+                return null;
+            }
+
+            // If capacity is set, enforce it and decrement by 1 on successful registration.
+            if ($lockedEvent->capacity !== null) {
+                if ($lockedEvent->capacity <= 0) {
+                    return null;
+                }
+            }
+
+            $participant = CMEventParticipant::create($validated);
+
+            if ($lockedEvent->capacity !== null) {
+                $lockedEvent->decrement('capacity');
+            }
+
+            return $participant;
+        });
+
+        if (!$participant) {
+            return redirect()
+                ->to(url('/') . '#inscription')
+                ->withErrors(['cm_event_id' => 'This event is full (capacity reached).']);
+        }
 
         $this->sendQrConfirmationEmail($participant);
 
