@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CMEventController;
 use App\Http\Controllers\CMEventParticipantController;
+use App\Http\Controllers\ScanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api as api;
 use App\Http\Controllers\ClerckController;
@@ -19,9 +20,8 @@ use App\Http\Controllers\FormulaireController;
 use App\Http\Controllers\GuidedVisitController;
 use App\Http\Controllers\VideoController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [CMEventController::class, 'displayEvents'])->name('welcome');
+
 Route::get('/termsofuse', function () {
     return view('terms.terms_and_policy');
 });
@@ -123,10 +123,17 @@ Route::get('/forms', [FormulaireController::class, 'index'])->name('form.index')
 Route::get('/form/{formulaire}', [FormulaireController::class, 'show'])->name('form.show')->middleware(['auth', 'verified']);
 Route::delete('/form/{formulaire}', [FormulaireController::class, 'destroy'])->name('form.delete')->middleware(['auth', 'verified']);
 
+// Public registration from the welcome page — no auth required
+Route::post('/cmevents/participants/register', [CMEventParticipantController::class, 'publicStore'])->name('cmevents.participants.public_store');
+
+// QR code scanner — no auth required, standalone check-in tool
+Route::get('/scan', [ScanController::class, 'index'])->name('scan');
+
 Route::resource('cmevents', CMEventController::class)->except(['show'])->middleware(['auth', 'verified']);
 Route::prefix('cmevents/{cmevent}/participants')->name('cmevents.participants.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [CMEventParticipantController::class, 'index'])->name('index');
     Route::delete('/{participant}', [CMEventParticipantController::class, 'destroy'])->name('destroy');
+    Route::post('/', [CMEventParticipantController::class, 'store'])->name('store');
 });
 
 require __DIR__ . '/auth.php';
