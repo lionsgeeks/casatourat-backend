@@ -145,8 +145,9 @@ class CMEventParticipantController
             // HMAC signature prevents payload tampering
             $payload['sig'] = hash_hmac('sha256', json_encode($payload), config('app.key'));
 
-            // SVG requires no PHP image extensions (Imagick/GD) — safe on all environments
-            $qrSvg = (string) QrCode::format('svg')->size(300)->generate(json_encode($payload));
+            // SVG requires no PHP image extensions (Imagick/GD) — safe on all environments.
+            // Use a larger size for sharper rendering in email clients and easier scanning.
+            $qrSvg = (string) QrCode::format('svg')->size(600)->generate(json_encode($payload));
             $qrBase64 = base64_encode($qrSvg);
 
             Mail::to($participant->email)->send(

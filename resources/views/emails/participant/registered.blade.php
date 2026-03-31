@@ -212,8 +212,8 @@
 
         .qr-image-wrap {
             flex-shrink: 0;
-            width: 112px;
-            height: 112px;
+            width: 200px;
+            height: 200px;
             border-radius: 10px;
             background-color: white;
             border: 1px solid rgb(var(--border));
@@ -224,9 +224,10 @@
         }
 
         .qr-image-wrap img {
-            width: 96px;
-            height: 96px;
+            width: 100%;
+            height: 100%;
             display: block;
+            object-fit: contain;
         }
 
         /* Placeholder QR visual for preview */
@@ -471,6 +472,12 @@
                         <p class="detail-key">Identifiant participant</p>
                         <p class="detail-val">
                             <span class="id-chip">#{{ $participant->id }}</span>
+                        </p>
+                    </div>
+                    <div class="detail-cell">
+                        <p class="detail-key">Début de l'événement</p>
+                        <p class="detail-val">
+                            {{ optional(optional($participant->cmevent)->start_date)->format('d M Y, H:i') ?? '—' }}
                         </p>
                     </div>
                     <div class="detail-cell">
