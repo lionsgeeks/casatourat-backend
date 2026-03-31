@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ParticipantRegistered;
 use App\Models\CMEvent;
 use App\Models\CMEventParticipant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CMEventParticipantController
 {
@@ -35,7 +39,9 @@ class CMEventParticipantController
             'phone_number' => ['required', 'string', 'max:30'],
         ]);
 
-        $cmevent->participants()->create($validated);
+        $participant = $cmevent->participants()->create($validated);
+
+        $this->sendQrConfirmationEmail($participant);
 
         return redirect()
             ->back()
@@ -55,10 +61,41 @@ class CMEventParticipantController
             'cm_event_id'  => ['required', 'integer', 'exists:cm_events,id'],
         ]);
 
-        CMEventParticipant::create($validated);
+        $participant = CMEventParticipant::create($validated);
+
+        $this->sendQrConfirmationEmail($participant);
 
         return redirect()
             ->to(url('/') . '#inscription')
             ->with('inscription_cm_event_success', true);
+    }
+
+    /**
+     * Builds a signed QR code payload and dispatches the confirmation email.
+     * Wrapped in try/catch so email failure never breaks the registration flow.
+     */
+    private function sendQrConfirmationEmail(CMEventParticipant $participant): void
+    {
+        try {
+            $payload = [
+                'participant_id' => $participant->id,
+                'name'           => $participant->full_name,
+                'email'          => $participant->email,
+                'registered_at'  => $participant->created_at->toISOString(),
+            ];
+
+            // HMAC signature prevents payload tampering
+            $payload['sig'] = hash_hmac('sha256', json_encode($payload), config('app.key'));
+
+            // SVG requires no PHP image extensions (Imagick/GD) — safe on all environments
+            $qrSvg = (string) QrCode::format('svg')->size(300)->generate(json_encode($payload));
+            $qrBase64 = base64_encode($qrSvg);
+
+            Mail::to($participant->email)->send(
+                new ParticipantRegistered($participant, $qrBase64)
+            );
+        } catch (\Exception $e) {
+            Log::error('QR confirmation email failed for participant #' . $participant->id . ': ' . $e->getMessage());
+        }
     }
 }
