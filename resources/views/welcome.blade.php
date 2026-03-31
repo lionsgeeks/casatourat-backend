@@ -130,7 +130,7 @@
                             {{-- App store badges --}}
                             <div data-reveal class="flex flex-wrap items-center gap-3 opacity-0 translate-y-4 transition duration-700 ease-out delay-300 will-change-transform">
                                 <a target="_blank" rel="noreferrer" href="https://apps.apple.com/us/app/casatourat/id6740987173" class="transition hover:-translate-y-0.5 hover:brightness-105">
-                                    <img width="150" class="h-auto" src="{{ asset('assets/images/App_Store_(iOS)-Badge-Logo.wine.png') }}" alt="Download on the App Store" loading="lazy">
+                                    <img width="180" class="h-auto" src="{{ asset('assets/images/App_Store_(iOS)-Badge-Logo.wine.png') }}" alt="Download on the App Store" loading="lazy">
                                 </a>
                                 <a target="_blank" rel="noreferrer" href="https://play.google.com/store/apps/details?id=com.casatourat.casaguide" class="transition hover:-translate-y-0.5 hover:brightness-105">
                                     <img width="150" class="h-auto" src="{{ asset('assets/images/Google_Play-Badge-Logo.wine.png') }}" alt="Get it on Google Play" loading="lazy">
@@ -149,25 +149,25 @@
                         </div>
 
                         {{-- ── RIGHT — Two floating phone screens ── --}}
-                        <div class="relative flex items-end justify-center lg:justify-end" style="min-height: 520px;">
+                        <div class="relative flex items-end justify-center lg:justify-end" style="min-height: 680px;">
 
                             {{-- Radial glow behind phones --}}
                             <div aria-hidden="true" class="absolute inset-0 flex items-center justify-center">
-                                <div class="h-80 w-80 rounded-full bg-[rgb(var(--primary)/0.12)] blur-3xl"></div>
+                                <div class="h-[28rem] w-[28rem] rounded-full bg-[rgb(var(--primary)/0.12)] blur-3xl"></div>
                             </div>
 
                             {{-- Phone 1 — back / slightly left, raised --}}
                             <div
                                 data-reveal
-                                class="relative z-10 -mr-8 mb-0 w-[200px] opacity-0 translate-y-4 transition duration-700 ease-out will-change-transform sm:w-[220px]"
-                                style="margin-bottom: 40px;"
+                                class="relative z-10 -mr-12 w-[280px] opacity-0 translate-y-4 transition duration-700 ease-out will-change-transform sm:w-[300px]"
+                                style="margin-bottom: 60px;"
                             >
                                 {{-- Phone shell --}}
-                                <div class="relative overflow-hidden rounded-[2.2rem] border-[3px] border-[rgb(var(--foreground)/0.08)] bg-[rgb(var(--foreground)/0.06)] shadow-2xl shadow-[rgb(var(--primary)/0.15)]">
+                                <div class="relative overflow-hidden rounded-[2.8rem] border-[3px] border-[rgb(var(--foreground)/0.08)] bg-[rgb(var(--foreground)/0.06)] shadow-2xl shadow-[rgb(var(--primary)/0.15)]">
                                     {{-- Notch --}}
-                                    <div class="absolute left-1/2 top-2 z-20 h-5 w-20 -translate-x-1/2 rounded-full bg-[rgb(var(--foreground)/0.10)]"></div>
+                                    <div class="absolute left-1/2 top-2.5 z-20 h-5 w-24 -translate-x-1/2 rounded-full bg-[rgb(var(--foreground)/0.10)]"></div>
                                     {{-- Screen --}}
-                                    <div class="overflow-hidden rounded-[2rem]">
+                                    <div class="overflow-hidden rounded-[2.6rem]">
                                         <img
                                             src="{{ asset('assets/images/Frame_65.png') }}"
                                             alt="Casatourat screen — circuits"
@@ -178,7 +178,7 @@
                                 </div>
 
                                 {{-- Floating stat badge — top-left of phone 1 --}}
-                                <div class="absolute -left-10 top-10 z-30 hidden sm:block">
+                                <div class="absolute -left-14 top-12 z-30 hidden sm:block">
                                     <div class="flex items-center gap-2 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-3 py-2.5 shadow-lg ring-1 ring-[rgb(var(--primary)/0.10)]">
                                         <div class="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[rgb(var(--primary)/0.10)]">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[rgb(var(--primary))]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -200,14 +200,14 @@
                             {{-- Phone 2 — front / slightly right, lower --}}
                             <div
                                 data-reveal
-                                class="relative z-20 w-[200px] opacity-0 translate-y-4 transition duration-700 ease-out delay-150 will-change-transform sm:w-[220px]"
+                                class="relative z-20 w-[280px] opacity-0 translate-y-4 transition duration-700 ease-out delay-150 will-change-transform sm:w-[300px]"
                             >
                                 {{-- Phone shell --}}
-                                <div class="relative overflow-hidden rounded-[2.2rem] border-[3px] border-[rgb(var(--foreground)/0.08)] bg-[rgb(var(--foreground)/0.06)] shadow-2xl shadow-[rgb(var(--primary)/0.20)]">
+                                <div class="relative overflow-hidden rounded-[2.8rem] border-[3px] border-[rgb(var(--foreground)/0.08)] bg-[rgb(var(--foreground)/0.06)] shadow-2xl shadow-[rgb(var(--primary)/0.20)]">
                                     {{-- Notch --}}
-                                    <div class="absolute left-1/2 top-2 z-20 h-5 w-20 -translate-x-1/2 rounded-full bg-[rgb(var(--foreground)/0.10)]"></div>
+                                    <div class="absolute left-1/2 top-2.5 z-20 h-5 w-24 -translate-x-1/2 rounded-full bg-[rgb(var(--foreground)/0.10)]"></div>
                                     {{-- Screen --}}
-                                    <div class="overflow-hidden rounded-[2rem]">
+                                    <div class="overflow-hidden rounded-[2.6rem]">
                                         <img
                                             src="{{ asset('assets/images/Frame_64.png') }}"
                                             alt="Casatourat screen — events"
@@ -218,7 +218,7 @@
                                 </div>
 
                                 {{-- Floating stat badge — bottom-right of phone 2 --}}
-                                <div class="absolute -bottom-4 -right-10 z-30 hidden sm:block">
+                                <div class="absolute -bottom-4 -right-14 z-30 hidden sm:block">
                                     <div class="flex items-center gap-2 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-3 py-2.5 shadow-lg ring-1 ring-[rgb(var(--primary)/0.10)]">
                                         <div class="flex -space-x-1.5">
                                             @foreach (['A','B','C'] as $i)
