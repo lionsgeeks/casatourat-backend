@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        /* Brand */
+        --primary: 18 33 175; /* #1221af */
+        --primary-foreground: 255 255 255;
+
+        /* Neutrals */
+        --background: 248 250 252; /* slate-50-ish */
+        --foreground: 15 23 42; /* slate-900-ish */
+        --muted: 100 116 139; /* slate-500-ish */
+        --border: 226 232 240; /* slate-200-ish */
+
+        /* UI */
+        --card: 255 255 255;
+        --ring: 18 33 175; /* matches --primary */
+    }
+}
+
 
 .notif_body::-webkit-scrollbar {
     width: 5px;

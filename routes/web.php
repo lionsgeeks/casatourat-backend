@@ -16,10 +16,18 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\FormulaireController;
 use App\Http\Controllers\GuidedVisitController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\InscriptionController;
 
 Route::get('/', function () {
-    return view('welcome');
+    $events = \App\Models\Event::query()
+        ->orderByDesc('start')
+        ->limit(25)
+        ->get(['id', 'title', 'start', 'end']);
+
+    return view('welcome', compact('events'));
 })->name('welcome');
+Route::post('/inscription', [InscriptionController::class, 'store'])->name('inscription.store');
+
 Route::get('/termsofuse', function () {
     return view('terms.terms_and_policy');
 });
