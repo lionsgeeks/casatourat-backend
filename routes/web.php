@@ -9,6 +9,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\CMEventController;
+use App\Http\Controllers\CMEventParticipantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api as api;
 use App\Http\Controllers\ClerckController;
@@ -120,5 +122,11 @@ Route::post('/survey', [FormulaireController::class, 'store'])->name('survey.sto
 Route::get('/forms', [FormulaireController::class, 'index'])->name('form.index')->middleware(['auth', 'verified']);
 Route::get('/form/{formulaire}', [FormulaireController::class, 'show'])->name('form.show')->middleware(['auth', 'verified']);
 Route::delete('/form/{formulaire}', [FormulaireController::class, 'destroy'])->name('form.delete')->middleware(['auth', 'verified']);
+
+Route::resource('cmevents', CMEventController::class)->except(['show'])->middleware(['auth', 'verified']);
+Route::prefix('cmevents/{cmevent}/participants')->name('cmevents.participants.')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [CMEventParticipantController::class, 'index'])->name('index');
+    Route::delete('/{participant}', [CMEventParticipantController::class, 'destroy'])->name('destroy');
+});
 
 require __DIR__ . '/auth.php';
