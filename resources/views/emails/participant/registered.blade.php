@@ -42,11 +42,11 @@
                                         <table role="presentation" cellspacing="0" cellpadding="0" border="0"
                                             style="border-collapse:collapse;">
                                             <tr>
-                                                <td valign="middle" style="padding-right:12px;">
+                                                {{-- <td valign="middle" style="padding-right:12px;">
                                                     <img src="{{ asset('assets/images/Logo-Casamemoire-color.svg') }}" width="56" height="56"
                                                         alt="CasaMémoire"
                                                         style="display:block; border:0; outline:none; text-decoration:none; width:56px; height:56px;" />
-                                                </td>
+                                                </td> --}}
                                                 <td valign="middle">
                                                     <span
                                                         style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.9); letter-spacing:0.8px; text-transform:uppercase;">CasaMémoire</span>
