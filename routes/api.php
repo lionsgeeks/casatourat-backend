@@ -62,4 +62,6 @@ Route::get('/clerk', [api\ClerkController::class, 'index']);
 Route::get('/cm-events', [CMEventApiController::class, 'index']);
 Route::get('/cm-events/{cmevent}', [CMEventApiController::class, 'show']);
 Route::get('/cm-events/{cmevent}/participants', [CMEventApiController::class, 'participants']);
+Route::post('/cm-events/{cmevent}/verify-qr', [CMEventApiController::class, 'verifyQr']);
 Route::get('/cm-participants/{participant}', [CMEventApiController::class, 'participant']);
+Route::post('/cm-participants/{participant}/manual-validate', [CMEventApiController::class, 'manualValidate']);
