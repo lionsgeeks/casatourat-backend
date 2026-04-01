@@ -13,6 +13,12 @@ class CMEventParticipant extends Model
         'full_name',
         'email',
         'phone_number',
+        'scanned_at',
+        'validation_method',
+    ];
+
+    protected $casts = [
+        'scanned_at' => 'datetime',
     ];
 
     public function cmevent()
