@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api as api;
+use App\Http\Controllers\Api\CMEventApiController;
 use App\Http\Controllers\Api\CircuitController;
 use App\Http\Controllers\Api\EventController;
 use Illuminate\Http\Request;
@@ -57,3 +58,8 @@ Route::get('/customize', [api\CustomizeCircuitController::class, 'show']);
 Route::delete('/customize/delete/{customCircuit}', [api\CustomizeCircuitController::class, 'destroy']);
 
 Route::get('/clerk', [api\ClerkController::class, 'index']);
+
+Route::get('/cm-events', [CMEventApiController::class, 'index']);
+Route::get('/cm-events/{cmevent}', [CMEventApiController::class, 'show']);
+Route::get('/cm-events/{cmevent}/participants', [CMEventApiController::class, 'participants']);
+Route::get('/cm-participants/{participant}', [CMEventApiController::class, 'participant']);
