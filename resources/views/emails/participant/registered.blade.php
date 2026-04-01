@@ -429,26 +429,10 @@
 
                 <p class="greeting">Bonjour {{ $participant->full_name }},</p>
                 <p class="instruction">
-                    Nous avons bien reçu votre inscription. Présentez le QR code ci-dessous
-                    à l'entrée de l'événement — il sera scanné par notre application pour
-                    confirmer votre identité en quelques secondes.
+                    Nous avons bien reçu votre inscription. Votre QR code d'accès est
+                    maintenant joint en pièce attachée au format PDF. Présentez ce document
+                    à l'entrée de l'événement pour confirmer votre identité en quelques secondes.
                 </p>
-
-                <!-- QR CODE -->
-                <div class="qr-block">
-                    <div class="qr-image-wrap">
-                        {{-- i want he to set the qr code of the participant --}}
-                        <img src="data:image/svg+xml;base64,{{ $qrBase64 }}" alt="QR code d'accès" />
-                    </div>
-                    <div class="qr-meta">
-                        <p class="qr-label">Billet d'accès</p>
-                        <p class="qr-title">QR Code de vérification</p>
-                        <p class="qr-hint">
-                            Présentez ce code à l'entrée ou imprimez
-                            cet e-mail pour l'utiliser hors ligne.
-                        </p>
-                    </div>
-                </div>
 
                 <hr class="divider" />
 
