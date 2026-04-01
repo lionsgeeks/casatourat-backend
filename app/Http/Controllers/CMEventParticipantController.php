@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CMEventParticipantController
@@ -36,9 +37,20 @@ class CMEventParticipantController
     {
         $validated = $request->validate([
             'full_name'    => ['required', 'string', 'max:255'],
-            'email'        => ['required', 'email', 'max:255'],
+            'email'        => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('cm_event_participants', 'email')->where(
+                    fn ($q) => $q->where('cm_event_id', $cmevent->id)
+                ),
+            ],
             'phone_number' => ['required', 'string', 'max:30'],
+        ], [
+            'email.unique' => 'This email is already registered for this event.',
         ]);
+
+        $validated['email'] = strtolower($validated['email']);
 
         $participant = DB::transaction(function () use ($cmevent, $validated) {
             $lockedEvent = CMEvent::query()->lockForUpdate()->find($cmevent->id);
@@ -84,10 +96,21 @@ class CMEventParticipantController
     {
         $validated = $request->validate([
             'full_name'    => ['required', 'string', 'max:255'],
-            'email'        => ['required', 'email', 'max:255'],
+            'email'        => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('cm_event_participants', 'email')->where(
+                    fn ($q) => $q->where('cm_event_id', (int) $request->input('cm_event_id'))
+                ),
+            ],
             'phone_number' => ['required', 'string', 'max:30'],
             'cm_event_id'  => ['required', 'integer', 'exists:cm_events,id'],
+        ], [
+            'email.unique' => 'This email is already registered for this event.',
         ]);
+
+        $validated['email'] = strtolower($validated['email']);
 
         $participant = DB::transaction(function () use ($validated) {
             $lockedEvent = CMEvent::query()

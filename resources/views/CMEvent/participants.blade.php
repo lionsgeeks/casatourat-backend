@@ -7,6 +7,13 @@
 
     <div class="p-4 sm:p-6 lg:p-8">
         <div class="flex flex-col gap-4">
+            @if (session('success'))
+                <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
+                    role="status">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-5">
                 <div class="mb-3 flex items-center justify-between">
                     <h3 class="text-base sm:text-lg font-semibold text-gray-900 m-0">Participants List</h3>
@@ -31,6 +38,8 @@
                                         Phone Number</th>
                                     <th class="py-3 px-3 text-xs font-semibold uppercase tracking-wide text-gray-600">
                                         Registered At</th>
+                                    <th class="py-3 px-3 text-xs font-semibold uppercase tracking-wide text-gray-600 w-[100px] text-right">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +51,19 @@
                                         <td class="py-2 px-3 text-gray-700">{{ $participant->phone_number }}</td>
                                         <td class="py-2 px-3 text-gray-700">
                                             {{ $participant->created_at?->format('Y-m-d H:i') }}</td>
+                                        <td class="py-2 px-3 text-right whitespace-nowrap">
+                                            <form
+                                                action="{{ route('cmevents.participants.destroy', [$cmevent, $participant]) }}"
+                                                method="post" class="inline"
+                                                onsubmit="return confirm('Remove this participant from the event? This cannot be undone.');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-sm font-medium text-red-600 hover:text-red-800 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500/30 rounded px-1">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
