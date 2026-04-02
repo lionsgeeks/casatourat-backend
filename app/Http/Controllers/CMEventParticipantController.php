@@ -27,7 +27,16 @@ class CMEventParticipantController
             abort(404);
         }
 
-        $participant->delete();
+        DB::transaction(function () use ($cmevent, $participant) {
+            $lockedEvent = CMEvent::query()->lockForUpdate()->findOrFail($cmevent->id);
+
+            $participant->delete();
+
+            // Registration decrements capacity (spots remaining); restore one slot on delete.
+            if ($lockedEvent->capacity !== null) {
+                $lockedEvent->increment('capacity');
+            }
+        });
 
         return redirect()->route('cmevents.participants.index', $cmevent)
             ->with('success', 'Participant deleted successfully.');
