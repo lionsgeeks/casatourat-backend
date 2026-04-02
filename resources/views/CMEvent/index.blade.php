@@ -39,9 +39,6 @@
                             <thead>
                                 <tr class="border-b bg-gray-50">
                                     <th class="py-3 px-3 text-xs font-medium uppercase tracking-wide text-gray-600">
-                                        Cover
-                                    </th>
-                                    <th class="py-3 px-3 text-xs font-medium uppercase tracking-wide text-gray-600">
                                         Title
                                     </th>
                                     <th class="py-3 px-3 text-xs font-medium uppercase tracking-wide text-gray-600">
@@ -68,14 +65,6 @@
                             <tbody>
                                 @foreach ($cmevents as $event)
                                     <tr class="border-b hover:bg-gray-50/80 transition-colors">
-                                        <td class="py-2 px-3">
-                                            @if ($event->cover)
-                                                <img src="{{ asset('storage/images/' . $event->cover) }}" alt="cover"
-                                                    class="h-12 w-20 object-cover rounded-md border border-gray-200">
-                                            @else
-                                                <span class="text-gray-500">-</span>
-                                            @endif
-                                        </td>
                                         <td class="py-2 px-3 font-medium text-gray-900 truncate max-w-xs">
                                             {{ $event->name }}</td>
                                         <td class="py-2 px-3 text-gray-700">

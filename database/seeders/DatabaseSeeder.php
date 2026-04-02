@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
        //i want to seed 5 upcommin event and 2 previous events
        models\CMEvent::insert([
         'name' => 'CM Event 1',
-        'cover' => 'image1.jpg',
         'description' => 'Description of the CM Event 1',
         'start_date' => Carbon::now(),
         'end_date' => Carbon::now()->addDays(1),
@@ -41,7 +40,6 @@ class DatabaseSeeder extends Seeder
 
     models\CMEvent::insert([
         'name' => 'CM Event 2',
-        'cover' => 'image2.jpg',
         'description' => 'Description of the CM Event 2',
         'start_date' => Carbon::now()->subDays(1),
         'end_date' => Carbon::now(),
@@ -54,7 +52,6 @@ class DatabaseSeeder extends Seeder
 
     models\CMEvent::insert([
         'name' => 'CM Event 3',
-        'cover' => 'image3.jpg',
         'description' => 'Description of the CM Event 3',
         'start_date' => Carbon::now()->addDays(1),
         'end_date' => Carbon::now()->addDays(2),
@@ -67,7 +64,6 @@ class DatabaseSeeder extends Seeder
 
     models\CMEvent::insert([
         'name' => 'CM Event 4',
-        'cover' => 'image4.jpg',
         'description' => 'Description of the CM Event 4',
         'start_date' => Carbon::now()->addDays(2),
         'end_date' => Carbon::now()->addDays(3),
@@ -80,7 +76,6 @@ class DatabaseSeeder extends Seeder
 
     models\CMEvent::insert([
         'name' => 'CM Event 5',
-        'cover' => 'image5.jpg',
         'description' => 'Description of the CM Event 5',
         'start_date' => Carbon::now()->addDays(3),
         'end_date' => Carbon::now()->addDays(4),
@@ -93,7 +88,6 @@ class DatabaseSeeder extends Seeder
 
     models\CMEvent::insert([
         'name' => 'CM Event 6',
-        'cover' => 'image6.jpg',
         'description' => 'Description of the CM Event 6',
         'start_date' => Carbon::now()->addDays(4),
         'end_date' => Carbon::now()->addDays(5),
@@ -105,7 +99,6 @@ class DatabaseSeeder extends Seeder
     ]);
     models\CMEvent::insert([
         'name' => 'CM Event 7',
-        'cover' => 'image7.jpg',
         'description' => 'Description of the CM Event 7',
         'start_date' => Carbon::now()->addDays(5),
         'end_date' => Carbon::now()->addDays(6),
@@ -117,7 +110,6 @@ class DatabaseSeeder extends Seeder
     ]);
     models\CMEvent::insert([
         'name' => 'CM Event 8',
-        'cover' => 'image8.jpg',
         'description' => 'Description of the CM Event 8',
         'start_date' => Carbon::now()->addDays(6),
         'end_date' => Carbon::now()->addDays(7),
@@ -129,7 +121,6 @@ class DatabaseSeeder extends Seeder
     ]);
     models\CMEvent::insert([
         'name' => 'CM Event 9',
-        'cover' => 'image9.jpg',
         'description' => 'Description of the CM Event 9',
         'start_date' => Carbon::now()->addDays(7),
         'end_date' => Carbon::now()->addDays(8),
@@ -141,7 +132,6 @@ class DatabaseSeeder extends Seeder
     ]);
     models\CMEvent::insert([
         'name' => 'CM Event 10',
-        'cover' => 'image10.jpg',
         'description' => 'Description of the CM Event 10',
         'start_date' => Carbon::now()->addDays(8),
         'end_date' => Carbon::now()->addDays(9),

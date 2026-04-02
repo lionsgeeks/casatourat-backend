@@ -10,7 +10,7 @@
             <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-5">
                 <div class="mb-6">
                     <h2 class="text-xl font-semibold text-gray-900 m-0">Edit Event</h2>
-                    <p class="text-sm text-gray-500 mt-1 mb-0">Update event information and cover image.</p>
+                    <p class="text-sm text-gray-500 mt-1 mb-0">Update event information.</p>
                 </div>
 
                 @if ($errors->any())
@@ -23,8 +23,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('cmevents.update', $cmevent) }}" method="post" enctype="multipart/form-data"
-                    class="flex flex-col gap-5">
+                <form action="{{ route('cmevents.update', $cmevent) }}" method="post" class="flex flex-col gap-5">
                     @csrf
                     @method('PUT')
 
@@ -73,25 +72,14 @@
                         </div>
                     </div>
 
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div class="flex flex-col gap-1.5">
-                            <label for="cover" class="text-sm font-medium text-gray-700">Cover</label>
-                            @if ($cmevent->cover)
-                                <img src="{{ asset('storage/images/' . $cmevent->cover) }}" alt="cover"
-                                    class="h-32 w-48 object-cover rounded-lg border border-gray-200 mb-2">
-                            @endif
-                            <input id="cover" name="cover" type="file" accept="image/*"
-                                class="rounded-lg border-gray-300 focus:border-alpha focus:ring-alpha file:mr-3 file:px-3 file:py-2 file:rounded file:border-0 file:bg-gray-100 file:text-gray-700">
-                        </div>
-                        <div class="flex items-end">
-                            <label
-                                class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-300">
-                                <input type="checkbox" name="is_private" value="1"
-                                    class="rounded border-gray-300 text-alpha focus:ring-alpha"
-                                    {{ old('is_private', $cmevent->is_private) ? 'checked' : '' }}>
-                                <span class="text-sm font-medium text-gray-700">Private event</span>
-                            </label>
-                        </div>
+                    <div class="flex items-end">
+                        <label
+                            class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-300">
+                            <input type="checkbox" name="is_private" value="1"
+                                class="rounded border-gray-300 text-alpha focus:ring-alpha"
+                                {{ old('is_private', $cmevent->is_private) ? 'checked' : '' }}>
+                            <span class="text-sm font-medium text-gray-700">Private event</span>
+                        </label>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-2 pt-2">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CMEvent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CMEventController extends Controller
 {
@@ -24,19 +23,12 @@ class CMEventController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'capacity' => 'nullable|integer',
             'location' => 'nullable|string',
             'is_private' => 'boolean',
         ]);
-
-        if ($request->hasFile('cover')) {
-            $coverName = time() . '_' . $request->file('cover')->getClientOriginalName();
-            $request->file('cover')->storeAs('images', $coverName, 'public');
-            $data['cover'] = $coverName;
-        }
 
         $data['is_private'] = $request->has('is_private') ? true : false;
 
@@ -55,22 +47,12 @@ class CMEventController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'capacity' => 'nullable|integer',
             'location' => 'nullable|string',
             'is_private' => 'boolean',
         ]);
-
-        if ($request->hasFile('cover')) {
-            if ($cmevent->cover) {
-                Storage::disk('public')->delete('images/' . $cmevent->cover);
-            }
-            $coverName = time() . '_' . $request->file('cover')->getClientOriginalName();
-            $request->file('cover')->storeAs('images', $coverName, 'public');
-            $data['cover'] = $coverName;
-        }
 
         $data['is_private'] = $request->has('is_private') ? true : false;
 
@@ -81,9 +63,6 @@ class CMEventController extends Controller
 
     public function destroy(CMEvent $cmevent)
     {
-        if ($cmevent->cover) {
-            Storage::disk('public')->delete('images/' . $cmevent->cover);
-        }
         $cmevent->delete();
 
         return redirect()->route('cmevents.index')->with('success', 'Event deleted successfully.');
