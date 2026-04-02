@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-end">
+                    {{-- <div class="flex items-end">
                         <label
                             class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-300">
                             <input type="checkbox" name="is_private" value="1"
@@ -79,7 +79,7 @@
                                 {{ old('is_private') ? 'checked' : '' }}>
                             <span class="text-sm font-medium text-gray-700">Private event</span>
                         </label>
-                    </div>
+                    </div> --}}
 
                     <div class="flex flex-col sm:flex-row gap-2 pt-2">
                         <button type="submit"
