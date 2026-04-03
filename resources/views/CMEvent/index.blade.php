@@ -58,6 +58,9 @@
                                         Visibility
                                     </th>
                                     <th class="py-3 px-3 text-xs font-medium uppercase tracking-wide text-gray-600">
+                                        Share link
+                                    </th>
+                                    <th class="py-3 px-3 text-xs font-medium uppercase tracking-wide text-gray-600">
                                         Actions
                                     </th>
                                 </tr>
@@ -79,6 +82,26 @@
                                                 class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $event->is_private ? 'bg-gray-200 text-gray-800' : 'bg-alpha/10 text-alpha' }}">
                                                 {{ $event->is_private ? 'Private' : 'Public' }}
                                             </span>
+                                        </td>
+                                        <td class="py-2 px-3 max-w-[14rem]">
+                                            @php
+                                                $registrationShareUrl = route('welcome', ['event' => $event->id]) . '#inscription';
+                                            @endphp
+                                            @if ($event->is_private)
+                                                <span class="text-xs text-gray-400" title="Private events are not listed on the public registration form.">—</span>
+                                            @else
+                                                <div class="flex flex-col gap-1">
+                                                    <a href="{{ $registrationShareUrl }}" target="_blank" rel="noopener noreferrer"
+                                                        class="text-xs text-alpha no-underline font-medium hover:underline truncate"
+                                                        title="Opens the homepage with this event pre-selected">Preview</a>
+                                                    <button type="button"
+                                                        class="text-left text-xs text-gray-600 hover:text-gray-900 px-0 py-0 border-0 bg-transparent cursor-pointer"
+                                                        data-copy-url="{{ $registrationShareUrl }}"
+                                                        onclick="navigator.clipboard.writeText(this.dataset.copyUrl).then(() => { var b = this; var t = b.textContent; b.textContent = 'Copied!'; setTimeout(function () { b.textContent = t; }, 2000); })">
+                                                        Copy link
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </td>
                                         <td class="py-2 px-3">
                                             <div class="flex flex-wrap gap-2">

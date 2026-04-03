@@ -67,7 +67,7 @@ class CMEventController extends Controller
 
         return redirect()->route('cmevents.index')->with('success', 'Event deleted successfully.');
     }
-    public function displayEvents()
+    public function displayEvents(Request $request)
     {
         $events = \App\Models\Event::query()
             ->orderByDesc('start')
@@ -82,6 +82,19 @@ class CMEventController extends Controller
             ->orderBy('start_date')
             ->get(['id', 'name', 'start_date', 'capacity']);
 
-        return view('welcome', compact('events', 'cmevents'));
+        // `event` keeps URLs generic; `cm_event_id` still accepted for older shared links.
+        $eventQueryId = $request->query('event', $request->query('cm_event_id'));
+
+        $selectedCmEventId = null;
+        if ($eventQueryId !== null && $eventQueryId !== '') {
+            $candidate = (int) $eventQueryId;
+            if ($candidate > 0 && $cmevents->contains('id', $candidate)) {
+                $selectedCmEventId = $candidate;
+            }
+        }
+
+        $scrollToInscription = $request->filled('event') || $request->filled('cm_event_id');
+
+        return view('welcome', compact('events', 'cmevents', 'selectedCmEventId', 'scrollToInscription'));
     }
 }

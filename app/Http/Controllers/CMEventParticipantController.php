@@ -131,18 +131,20 @@ class CMEventParticipantController
                 return null;
             }
 
-            // If capacity is set, enforce it and decrement by 1 on successful registration.
-            if ($lockedEvent->capacity !== null) {
-                if ($lockedEvent->capacity <= 0) {
-                    return null;
-                }
+            // Public registration only — same rules as the homepage listing.
+            if ($lockedEvent->is_private) {
+                return null;
+            }
+            if ($lockedEvent->start_date < now()) {
+                return null;
+            }
+            if ($lockedEvent->capacity === null || $lockedEvent->capacity <= 0) {
+                return null;
             }
 
             $participant = CMEventParticipant::create($validated);
 
-            if ($lockedEvent->capacity !== null) {
-                $lockedEvent->decrement('capacity');
-            }
+            $lockedEvent->decrement('capacity');
 
             return $participant;
         });
@@ -150,7 +152,9 @@ class CMEventParticipantController
         if (!$participant) {
             return redirect()
                 ->to(url('/') . '#inscription')
-                ->withErrors(['cm_event_id' => 'This event is full (capacity reached).']);
+                ->withErrors([
+                    'cm_event_id' => 'This event is not open for registration or is full.',
+                ]);
         }
 
         $this->sendQrConfirmationEmail($participant);
