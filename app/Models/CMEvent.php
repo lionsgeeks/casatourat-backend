@@ -10,7 +10,6 @@ class CMEvent extends Model
 
     protected $fillable = [
         'name',
-        'cover',
         'description',
         'start_date',
         'end_date',

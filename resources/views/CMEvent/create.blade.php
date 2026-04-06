@@ -23,8 +23,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('cmevents.store') }}" method="post" enctype="multipart/form-data"
-                    class="flex flex-col gap-5">
+                <form action="{{ route('cmevents.store') }}" method="post" class="flex flex-col gap-5">
                     @csrf
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -72,22 +71,15 @@
                         </div>
                     </div>
 
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div class="flex flex-col gap-1.5">
-                            <label for="cover" class="text-sm font-medium text-gray-700">Cover</label>
-                            <input id="cover" name="cover" type="file" accept="image/*"
-                                class="rounded-lg border-gray-300 focus:border-alpha focus:ring-alpha file:mr-3 file:px-3 file:py-2 file:rounded file:border-0 file:bg-gray-100 file:text-gray-700">
-                        </div>
-                        <div class="flex items-end">
-                            <label
-                                class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-300">
-                                <input type="checkbox" name="is_private" value="1"
-                                    class="rounded border-gray-300 text-alpha focus:ring-alpha"
-                                    {{ old('is_private') ? 'checked' : '' }}>
-                                <span class="text-sm font-medium text-gray-700">Private event</span>
-                            </label>
-                        </div>
-                    </div>
+                    {{-- <div class="flex items-end">
+                        <label
+                            class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-300">
+                            <input type="checkbox" name="is_private" value="1"
+                                class="rounded border-gray-300 text-alpha focus:ring-alpha"
+                                {{ old('is_private') ? 'checked' : '' }}>
+                            <span class="text-sm font-medium text-gray-700">Private event</span>
+                        </label>
+                    </div> --}}
 
                     <div class="flex flex-col sm:flex-row gap-2 pt-2">
                         <button type="submit"

@@ -20,137 +20,127 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         models\User::insert([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin@gmail.com'),
+            'name' => env('ADMIN_NAME'),
+            'email' => env('ADMIN_EMAIL'),
+            'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
 
-       //i want to seed 5 upcommin event and 2 previous events
-       models\CMEvent::insert([
-        'name' => 'CM Event 1',
-        'cover' => 'image1.jpg',
-        'description' => 'Description of the CM Event 1',
-        'start_date' => Carbon::now(),
-        'end_date' => Carbon::now()->addDays(1),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
+        // i want to seed 5 upcommin event and 2 previous events
+        models\CMEvent::insert([
+            'name' => 'CM Event 1',
+            'description' => 'Description of the CM Event 1',
+            'start_date' => Carbon::now(),
+            'end_date' => Carbon::now()->addDays(1),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
-    models\CMEvent::insert([
-        'name' => 'CM Event 2',
-        'cover' => 'image2.jpg',
-        'description' => 'Description of the CM Event 2',
-        'start_date' => Carbon::now()->subDays(1),
-        'end_date' => Carbon::now(),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 2',
+            'description' => 'Description of the CM Event 2',
+            'start_date' => Carbon::now()->subDays(1),
+            'end_date' => Carbon::now(),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
-    models\CMEvent::insert([
-        'name' => 'CM Event 3',
-        'cover' => 'image3.jpg',
-        'description' => 'Description of the CM Event 3',
-        'start_date' => Carbon::now()->addDays(1),
-        'end_date' => Carbon::now()->addDays(2),
-        'capacity' => 2,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 3',
+            'description' => 'Description of the CM Event 3',
+            'start_date' => Carbon::now()->addDays(1),
+            'end_date' => Carbon::now()->addDays(2),
+            'capacity' => 2,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
-    models\CMEvent::insert([
-        'name' => 'CM Event 4',
-        'cover' => 'image4.jpg',
-        'description' => 'Description of the CM Event 4',
-        'start_date' => Carbon::now()->addDays(2),
-        'end_date' => Carbon::now()->addDays(3),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),              
-    ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 4',
+            'description' => 'Description of the CM Event 4',
+            'start_date' => Carbon::now()->addDays(2),
+            'end_date' => Carbon::now()->addDays(3),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
-    models\CMEvent::insert([
-        'name' => 'CM Event 5',
-        'cover' => 'image5.jpg',
-        'description' => 'Description of the CM Event 5',
-        'start_date' => Carbon::now()->addDays(3),
-        'end_date' => Carbon::now()->addDays(4),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 5',
+            'description' => 'Description of the CM Event 5',
+            'start_date' => Carbon::now()->addDays(3),
+            'end_date' => Carbon::now()->addDays(4),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
-    models\CMEvent::insert([
-        'name' => 'CM Event 6',
-        'cover' => 'image6.jpg',
-        'description' => 'Description of the CM Event 6',
-        'start_date' => Carbon::now()->addDays(4),
-        'end_date' => Carbon::now()->addDays(5),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
-    models\CMEvent::insert([
-        'name' => 'CM Event 7',
-        'cover' => 'image7.jpg',
-        'description' => 'Description of the CM Event 7',
-        'start_date' => Carbon::now()->addDays(5),
-        'end_date' => Carbon::now()->addDays(6),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
-    models\CMEvent::insert([
-        'name' => 'CM Event 8',
-        'cover' => 'image8.jpg',
-        'description' => 'Description of the CM Event 8',
-        'start_date' => Carbon::now()->addDays(6),
-        'end_date' => Carbon::now()->addDays(7),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
-    models\CMEvent::insert([
-        'name' => 'CM Event 9',
-        'cover' => 'image9.jpg',
-        'description' => 'Description of the CM Event 9',
-        'start_date' => Carbon::now()->addDays(7),
-        'end_date' => Carbon::now()->addDays(8),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
-    models\CMEvent::insert([
-        'name' => 'CM Event 10',
-        'cover' => 'image10.jpg',
-        'description' => 'Description of the CM Event 10',
-        'start_date' => Carbon::now()->addDays(8),
-        'end_date' => Carbon::now()->addDays(9),
-        'capacity' => 100,
-        'location' => 'Casablanca',
-        'is_private' => false,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 6',
+            'description' => 'Description of the CM Event 6',
+            'start_date' => Carbon::now()->addDays(4),
+            'end_date' => Carbon::now()->addDays(5),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 7',
+            'description' => 'Description of the CM Event 7',
+            'start_date' => Carbon::now()->addDays(5),
+            'end_date' => Carbon::now()->addDays(6),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 8',
+            'description' => 'Description of the CM Event 8',
+            'start_date' => Carbon::now()->addDays(6),
+            'end_date' => Carbon::now()->addDays(7),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 9',
+            'description' => 'Description of the CM Event 9',
+            'start_date' => Carbon::now()->addDays(7),
+            'end_date' => Carbon::now()->addDays(8),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        models\CMEvent::insert([
+            'name' => 'CM Event 10',
+            'description' => 'Description of the CM Event 10',
+            'start_date' => Carbon::now()->addDays(8),
+            'end_date' => Carbon::now()->addDays(9),
+            'capacity' => 100,
+            'location' => 'Casablanca',
+            'is_private' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
         // models\Visitor::insert([
         //     [
         //         "full_name" => "Ahmed Alaoui",
@@ -198,7 +188,6 @@ class DatabaseSeeder extends Seeder
         //         "created_at" => Carbon::now(),
         //     ],
         // ]);
-
 
         // models\Circuit::insert([
         //     [

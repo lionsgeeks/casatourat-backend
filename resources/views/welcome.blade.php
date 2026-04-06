@@ -608,6 +608,17 @@
                                                 $upcomingCmEvents = collect($cmevents ?? [])->filter(
                                                     fn($e) => $e->start_date && $e->start_date->isFuture()
                                                 )->values();
+                                                $selectedForForm = old('cm_event_id');
+                                                if ($selectedForForm === null || $selectedForForm === '') {
+                                                    $selectedForForm = $selectedCmEventId ?? null;
+                                                }
+                                                $selectedForForm = $selectedForForm !== null && $selectedForForm !== ''
+                                                    ? (int) $selectedForForm
+                                                    : null;
+                                                $validEventIds = $upcomingCmEvents->pluck('id')->all();
+                                                if ($selectedForForm !== null && ! in_array($selectedForForm, $validEventIds, true)) {
+                                                    $selectedForForm = null;
+                                                }
                                             @endphp
                                             <div class="grid gap-1.5">
                                                 <label for="cm_event_id" class="text-sm font-semibold text-[rgb(var(--foreground))]">
@@ -628,11 +639,11 @@
                                                         required
                                                         class="w-full appearance-none rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--background))] py-3 pl-10 pr-10 text-sm text-[rgb(var(--foreground))] shadow-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[rgb(var(--ring))]"
                                                     >
-                                                        <option value="" disabled selected>
-                                                            <span x-show="lang === 'english'">— Choose an event —</span>
+                                                        <option value="" disabled @selected($selectedForForm === null)>
+                                                            —
                                                         </option>
                                                         @foreach ($upcomingCmEvents as $cmevent)
-                                                            <option value="{{ $cmevent->id }}" @selected(old('cm_event_id') == $cmevent->id)>
+                                                            <option value="{{ $cmevent->id }}" @selected($selectedForForm === $cmevent->id)>
                                                                 {{ $cmevent->name }} — {{ $cmevent->start_date->format('d M Y') }}
                                                             </option>
                                                         @endforeach
@@ -752,6 +763,17 @@
             revealEls.forEach((el) => observer.observe(el));
         })();
     </script>
+
+    @if (! empty($scrollToInscription))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var el = document.getElementById('inscription');
+                if (!el) return;
+                var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+            });
+        </script>
+    @endif
 
 </body>
 </html>
